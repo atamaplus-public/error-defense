@@ -1,0 +1,72 @@
+frameworkVersion: '3'
+service: error-defense
+provider:
+  name: aws
+  # https://docs.aws.amazon.com/lambda/latest/dg/lambda-python.html
+  runtime: python3.9
+  region: ap-northeast-1
+  stage: ${opt:stage, 'dev'}
+  tags:
+    Service: error-defense
+    Serverless: "True"
+    Environment: ${self:provider.stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - lambda:InvokeFunction
+            - lambda:InvokeAsync
+          Resource: "*"
+  environment:
+    SERVERLESS_STAGE: ${self:provider.stage}
+
+plugins:
+  - serverless-python-requirements
+  - serverless-prune-plugin
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+functions:
+  # Lambda for Slack Event API
+  app:
+    name: error-defense-${self:provider.stage}-app
+    handler: app/handler.handler
+    events:
+      - httpApi:
+          path: /slack/events
+          method: post
+    memorySize: 2048
+    timeout: 900
+    ephemeralStorageSize: 2048
+  
+  # Lambda for renew index batch
+  renewIndex:
+    name: error-defense-batch-${self:provider.stage}-renew-index
+    handler: batch/handler.handler
+    events:
+      - schedule: cron(0 23 * * ? *)
+    memorySize: 2048
+    timeout: 900
+    ephemeralStorageSize: 2048
+
+package:
+  patterns:
+    - "!.venv/**"
+    - "!node_modules/**"
+    - "!.idea/**"
+    - "!.vscode/**"
+    - "!.devcontainer/**"
+    - '!*.py[cod]'
+    - '!*__pycache__*'
+
+custom:
+  pythonRequirements:
+    zip: true
+    slim: true
+    fileName: requirements.txt
+    useDownloadCache: true
+    useStaticCache: true
+  prune:
+    automatic: true
+    number: 5
