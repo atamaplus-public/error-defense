@@ -1,0 +1,10 @@
+slack-bolt==1.18.0
+datadog-api-client==2.12.0
+urllib3<2
+pinecone-client==2.2.1
+langchain==0.0.189
+python-dotenv==1.0.0
+openai==0.27.7
+tiktoken==0.4.0
+python-dotenv==1.0.0
+pip-tools==6.13.0
