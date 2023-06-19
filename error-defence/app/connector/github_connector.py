@@ -1,5 +1,5 @@
 try:
-  import unzip_requirements
+  import unzip_requirements # type: ignore
 except ImportError:
   pass
 
