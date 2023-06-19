@@ -9,3 +9,4 @@ openai==0.27.7
 tiktoken==0.4.0
 python-dotenv==1.0.0
 pip-tools==6.13.0
+pyyaml

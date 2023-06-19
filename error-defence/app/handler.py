@@ -8,11 +8,13 @@ import logging
 import os
 import re
 import textwrap
+import yaml
 
 from slack_bolt import App
 from slack_bolt.adapter.aws_lambda import SlackRequestHandler
 
-from connector import datadog_connector, github_connector
+from connector import selector
+from parser import issuite
 
 # Logger
 _logger = logging.getLogger(__name__)
@@ -21,6 +23,13 @@ handler = logging.StreamHandler() # type: ignore
 _logger.addHandler(handler) # type: ignore
 
 MESSAGE_CHUNK_SIZE = 2500
+
+# select connector
+with open('config.yml', 'r') as file:
+    config = yaml.safe_load(file)
+
+error_monitoring_connector = selector.select_error_monitoring_connector(config)
+issue_tracker_connector = selector.select_issue_tracker_connector(config)
 
 
 def _return_first_response(client, channel_id, message_ts):
@@ -63,7 +72,7 @@ def _parse_shortcut_data(shortcut):
 
 
 def _get_similar_issues(stacktrace):
-    res = github_connector.run_query(stacktrace)
+    res = issue_tracker_connector.run_query(stacktrace)
     if res is not None:
         created_at = res.created_at.strftime("%Y-%m-%d %H:%M:%S")
         label_str = ", ".join(res.labels)
@@ -145,7 +154,7 @@ def open_modal(shortcut, client):
         #     # _logger.info(f"stacktrace {i}: {s}")
         #     if s:
 
-        stacktrace = datadog_connector.query_logs(d["from_ts"], d["to_ts"])
+        stacktrace = error_monitoring_connector.query_logs(d["from_ts"], d["to_ts"])
         _logger.info(f"stacktrace: {stacktrace}")
         
         chunks = textwrap.wrap(stacktrace, MESSAGE_CHUNK_SIZE)
