@@ -1,4 +1,4 @@
-import yaml
+# Desc: Selects the correct connector based on the config
 from enum import Enum
 
 from connector import datadog_connector, newrelic_connector, github_connector
