@@ -14,7 +14,11 @@ from slack_bolt.adapter.aws_lambda import SlackRequestHandler
 
 from connector import datadog_connector, github_connector
 
+# Logger
 _logger = logging.getLogger(__name__)
+_logger.setLevel(logging.INFO)
+handler = logging.StreamHandler() # type: ignore
+_logger.addHandler(handler) # type: ignore
 
 MESSAGE_CHUNK_SIZE = 2500
 
@@ -183,6 +187,6 @@ app.shortcut("defense")(
 
 
 def handler(event, context):
-    _logger.info(event)
+    _logger.info(event, context)
     slack_handler = SlackRequestHandler(app=app)
     return slack_handler.handle(event, context)

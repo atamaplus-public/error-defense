@@ -16,6 +16,12 @@ async-timeout==4.0.2
     #   langchain
 attrs==23.1.0
     # via aiohttp
+boto3==1.26.156
+    # via -r requirements.in
+botocore==1.29.156
+    # via
+    #   boto3
+    #   s3transfer
 build==0.10.0
     # via pip-tools
 certifi==2023.5.7
@@ -42,6 +48,10 @@ idna==3.4
     # via
     #   requests
     #   yarl
+jmespath==1.0.1
+    # via
+    #   boto3
+    #   botocore
 langchain==0.0.189
     # via -r requirements.in
 loguru==0.7.0
@@ -85,6 +95,7 @@ pyproject-hooks==1.0.0
     # via build
 python-dateutil==2.8.2
     # via
+    #   botocore
     #   datadog-api-client
     #   pinecone-client
 python-dotenv==1.0.0
@@ -101,6 +112,8 @@ requests==2.31.0
     #   openai
     #   pinecone-client
     #   tiktoken
+s3transfer==0.6.1
+    # via boto3
 six==1.16.0
     # via python-dateutil
 slack-bolt==1.18.0
@@ -133,6 +146,7 @@ typing-inspect==0.9.0
 urllib3==1.26.16
     # via
     #   -r requirements.in
+    #   botocore
     #   datadog-api-client
     #   pinecone-client
     #   requests

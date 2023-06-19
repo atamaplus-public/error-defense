@@ -8,7 +8,7 @@ import logging
 from typing import Optional
 import pinecone
 
-from src.models import Document
+from app.models.document import GithubDocument
 
 _logger = logging.getLogger(__name__)
 
@@ -103,7 +103,7 @@ def query(index, embed, trace):
     
 
 
-def run_query(trace) -> Optional[Document]:
+def run_query(trace) -> Optional[GithubDocument]:
     index_name = "error-defense-index"
     setup_pinecone(index_name)
     docs = load_github_issues()
@@ -120,7 +120,7 @@ def run_query(trace) -> Optional[Document]:
     if score < SIMIRARIRY_THRESHOLD:
         return None
     else:
-        return Document(
+        return GithubDocument(
             title = doc.metadata.get("title"),
             url = doc.metadata.get("url"),
             comments = doc.metadata.get("comments"),
