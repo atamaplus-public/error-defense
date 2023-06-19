@@ -33,7 +33,7 @@ def load_github_issues(repo=ISSUE_REPO):
     )
     docs = loader.load()
 
-    return docs
+    return docs 
 
 
 def setup_pinecone(index_name):
