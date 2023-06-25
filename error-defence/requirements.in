@@ -9,5 +9,7 @@ openai==0.27.7
 tiktoken==0.4.0
 python-dotenv==1.0.0
 pip-tools==6.13.0
-pyyaml
-pytz
+pyyaml==6.0
+pytz==2023.3
+jq==1.4.1
+chromadb==0.3.26

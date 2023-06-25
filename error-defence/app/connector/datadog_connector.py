@@ -25,7 +25,7 @@ def _datetime_handler(x):
     if isinstance(x, datetime):
         x = x.astimezone(pytz.timezone('Asia/Tokyo')) # Convert to JST timezone
         return x.isoformat()
-    raise TypeError("Unknown type")
+    # raise TypeError("Unknown type")
 
 
 def _crete_index(loader):
@@ -65,7 +65,7 @@ def query_logs(from_ts, to_ts):
 
     body = LogsListRequest(
         filter=LogsQueryFilter(
-            query="env:production status:error",
+            query="env:rc status:error",
             _from=f"{from_ts}",
             to=f"{to_ts}",
         ),
@@ -78,7 +78,9 @@ def query_logs(from_ts, to_ts):
     configuration = Configuration()
     with ApiClient(configuration) as api_client:
         api_instance = LogsApi(api_client)
-        response = api_instance.list_logs(body=body)
+        response = api_instance.list_logs(body=body).to_dict()
+    
+    print(response)
 
     result_file = os.path.join("./tmp", "result.json")
     with open(result_file, "w") as f:
