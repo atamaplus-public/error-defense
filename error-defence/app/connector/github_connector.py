@@ -12,6 +12,9 @@ from models.document import GithubDocument
 
 _logger = logging.getLogger(__name__)
 
+# env
+from dotenv import load_dotenv
+load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 GITHUB_PERSONAL_ACCESS_TOKEN = os.getenv("GITHUB_PERSONAL_ACCESS_TOKEN", "")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY", "")
