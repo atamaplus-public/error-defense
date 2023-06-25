@@ -8,7 +8,7 @@ import logging
 from typing import Optional
 import pinecone
 
-from app.models.document import GithubDocument
+from models.document import GithubDocument
 
 _logger = logging.getLogger(__name__)
 
