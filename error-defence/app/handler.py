@@ -14,7 +14,6 @@ from slack_bolt import App
 from slack_bolt.adapter.aws_lambda import SlackRequestHandler
 
 from connector import selector
-from parser import issuite
 
 # Logger
 _logger = logging.getLogger(__name__)
@@ -22,10 +21,14 @@ _logger.setLevel(logging.INFO)
 handler = logging.StreamHandler() # type: ignore
 _logger.addHandler(handler) # type: ignore
 
+# env
+from dotenv import load_dotenv
+load_dotenv()
+
 MESSAGE_CHUNK_SIZE = 2500
 
 # select connector
-with open('config.yml', 'r') as file:
+with open('./app/config.yaml', 'r') as file:
     config = yaml.safe_load(file)
 
 error_monitoring_connector = selector.select_error_monitoring_connector(config)
@@ -199,3 +202,8 @@ def handler(event, context):
     _logger.info(event, context)
     slack_handler = SlackRequestHandler(app=app)
     return slack_handler.handle(event, context)
+
+
+if __name__ == "__main__":
+    from slack_bolt.adapter.socket_mode import SocketModeHandler
+    SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()

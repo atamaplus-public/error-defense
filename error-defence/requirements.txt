@@ -10,12 +10,18 @@ aiohttp==3.8.4
     #   openai
 aiosignal==1.3.1
     # via aiohttp
+anyio==3.7.0
+    # via
+    #   starlette
+    #   watchfiles
 async-timeout==4.0.2
     # via
     #   aiohttp
     #   langchain
 attrs==23.1.0
     # via aiohttp
+backoff==2.2.1
+    # via posthog
 boto3==1.26.156
     # via -r requirements.in
 botocore==1.29.156
@@ -26,42 +32,77 @@ build==0.10.0
     # via pip-tools
 certifi==2023.5.7
     # via
+    #   clickhouse-connect
     #   datadog-api-client
+    #   pulsar-client
     #   requests
 charset-normalizer==3.1.0
     # via
     #   aiohttp
     #   requests
+chromadb==0.3.26
+    # via -r requirements.in
 click==8.1.3
-    # via pip-tools
+    # via
+    #   pip-tools
+    #   uvicorn
+clickhouse-connect==0.6.4
+    # via chromadb
+coloredlogs==15.0.1
+    # via onnxruntime
 dataclasses-json==0.5.8
     # via langchain
 datadog-api-client==2.12.0
     # via -r requirements.in
 dnspython==2.3.0
     # via pinecone-client
+duckdb==0.8.1
+    # via chromadb
+exceptiongroup==1.1.1
+    # via anyio
+fastapi==0.98.0
+    # via chromadb
+flatbuffers==23.5.26
+    # via onnxruntime
 frozenlist==1.3.3
     # via
     #   aiohttp
     #   aiosignal
+h11==0.14.0
+    # via uvicorn
+hnswlib==0.7.0
+    # via chromadb
+httptools==0.5.0
+    # via uvicorn
+humanfriendly==10.0
+    # via coloredlogs
 idna==3.4
     # via
+    #   anyio
     #   requests
     #   yarl
 jmespath==1.0.1
     # via
     #   boto3
     #   botocore
+jq==1.4.1
+    # via -r requirements.in
 langchain==0.0.189
     # via -r requirements.in
 loguru==0.7.0
     # via pinecone-client
+lz4==4.3.2
+    # via clickhouse-connect
 marshmallow==3.19.0
     # via
     #   dataclasses-json
     #   marshmallow-enum
 marshmallow-enum==1.5.1
     # via dataclasses-json
+monotonic==1.6
+    # via posthog
+mpmath==1.3.0
+    # via sympy
 multidict==6.0.4
     # via
     #   aiohttp
@@ -72,23 +113,42 @@ numexpr==2.8.4
     # via langchain
 numpy==1.24.3
     # via
+    #   chromadb
+    #   hnswlib
     #   langchain
     #   numexpr
+    #   onnxruntime
+    #   pandas
     #   pinecone-client
+onnxruntime==1.15.1
+    # via chromadb
 openai==0.27.7
     # via -r requirements.in
 openapi-schema-pydantic==1.2.4
     # via langchain
+overrides==7.3.1
+    # via chromadb
 packaging==23.1
     # via
     #   build
     #   marshmallow
+    #   onnxruntime
+pandas==2.0.2
+    # via chromadb
 pinecone-client==2.2.1
     # via -r requirements.in
 pip-tools==6.13.0
     # via -r requirements.in
+posthog==3.0.1
+    # via chromadb
+protobuf==4.23.3
+    # via onnxruntime
+pulsar-client==3.2.0
+    # via chromadb
 pydantic==1.10.9
     # via
+    #   chromadb
+    #   fastapi
     #   langchain
     #   openapi-schema-pydantic
 pyproject-hooks==1.0.0
@@ -97,63 +157,102 @@ python-dateutil==2.8.2
     # via
     #   botocore
     #   datadog-api-client
+    #   pandas
     #   pinecone-client
+    #   posthog
 python-dotenv==1.0.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   uvicorn
+pytz==2023.3
+    # via
+    #   -r requirements.in
+    #   clickhouse-connect
+    #   pandas
 pyyaml==6.0
     # via
+    #   -r requirements.in
     #   langchain
     #   pinecone-client
+    #   uvicorn
 regex==2023.6.3
     # via tiktoken
 requests==2.31.0
     # via
+    #   chromadb
     #   langchain
     #   openai
     #   pinecone-client
+    #   posthog
     #   tiktoken
 s3transfer==0.6.1
     # via boto3
 six==1.16.0
-    # via python-dateutil
+    # via
+    #   posthog
+    #   python-dateutil
 slack-bolt==1.18.0
     # via -r requirements.in
 slack-sdk==3.21.3
     # via slack-bolt
+sniffio==1.3.0
+    # via anyio
 sqlalchemy==2.0.16
     # via langchain
+starlette==0.27.0
+    # via fastapi
+sympy==1.12
+    # via onnxruntime
 tenacity==8.2.2
     # via langchain
 tiktoken==0.4.0
     # via -r requirements.in
+tokenizers==0.13.3
+    # via chromadb
 tomli==2.0.1
     # via
     #   build
     #   pyproject-hooks
 tqdm==4.65.0
     # via
+    #   chromadb
     #   openai
     #   pinecone-client
 typing-extensions==4.6.3
     # via
+    #   chromadb
     #   datadog-api-client
     #   pinecone-client
     #   pydantic
     #   sqlalchemy
+    #   starlette
     #   typing-inspect
 typing-inspect==0.9.0
     # via dataclasses-json
+tzdata==2023.3
+    # via pandas
 urllib3==1.26.16
     # via
     #   -r requirements.in
     #   botocore
+    #   clickhouse-connect
     #   datadog-api-client
     #   pinecone-client
     #   requests
+uvicorn[standard]==0.22.0
+    # via chromadb
+uvloop==0.17.0
+    # via uvicorn
+watchfiles==0.19.0
+    # via uvicorn
+websockets==11.0.3
+    # via uvicorn
 wheel==0.40.0
     # via pip-tools
 yarl==1.9.2
     # via aiohttp
+zstandard==0.21.0
+    # via clickhouse-connect
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
