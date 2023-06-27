@@ -11,6 +11,10 @@ import pinecone
 from models.document import GithubDocument
 
 _logger = logging.getLogger(__name__)
+_logger.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+_logger.addHandler(ch)
 
 # env
 from dotenv import load_dotenv
@@ -21,7 +25,7 @@ PINECONE_API_KEY = os.getenv("PINECONE_API_KEY", "")
 PINECONE_API_ENV = os.getenv("PINECONE_API_ENV", "asia-southeast1-gcp-free")
 ISSUE_REPO = os.getenv("ISSUE_REPO", "")
 
-SIMIRARIRY_THRESHOLD = 0.85
+SIMIRARIRY_THRESHOLD = 0.82
 
 
 def load_github_issues(repo=ISSUE_REPO):
@@ -91,6 +95,10 @@ def query(index, embed, trace):
     )
 
     template = """
+    You will get the part of the stacktrace or error message below.
+    If you get a stack trace, search for the Issue that contains the part of the stack trace that you think best captures the feature.
+    If you get a short error message, search for an Issue that contains a message similar to the full text of the error message.
+
     What is the most similar issue below? :
     {stacktrace}
     """
