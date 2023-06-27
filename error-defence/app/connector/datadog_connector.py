@@ -91,7 +91,16 @@ def query_logs(from_ts, to_ts):
         file_path=result_file,
         jq_schema='.data[].attributes.message',
     )
+    # TODO: search stacktrace from index
     index = _crete_index(loader)
-    query = "Search Stack Trace and retrun the last few rows of the stack trace"
+
+    query = """
+    First, search the stacktrace or error messages from the index.
+    Second, if you get the stacktrace, you should return the last few lines that you think best describe its characteristics.
+    If you get the error messages, you should return the full text of the error messages.
+
+    Show just only the result of the query.
+    """
+
     answer = index.query(query)
     return answer
